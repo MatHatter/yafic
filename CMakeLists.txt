@@ -1,0 +1,26 @@
+PROJECT(YAFIC)
+
+Cmake_Minimum_Required(VERSION 2.8.9)
+
+Set(YAFIC_MAJOR_VERSION    0)
+Set(YAFIC_MINOR_VERSION    0)
+Set(YAFIC_REVISION_VERSION a)
+
+Set(YAFIC_VERSION ${YAFIC_MAJOR_VERSION}.${YAFIC_MINOR_VERSION})
+If(YAFIC_REVISION_VERSION)
+  Set(YAFIC_VERSION ${YAFIC_VERSION}.${YAFIC_REVISION_VERSION})
+Endif(YAFIC_REVISION_VERSION)
+
+Message("-- YAFIC VERSION ${YAFIC_VERSION}")
+
+Exec_Program(date ARGS "+%Y/%m/%d-%H:%M:%S" OUTPUT_VARIABLE BUILD_DATE )
+Set(YAFIC_BUILD_VERSION ${BUILD_DATE})
+
+Set( CMAKE_MODULE_PATH ${YAFIC_SOURCE_DIR}/cmake )
+
+# Boost
+Find_Package (Boost REQUIRED 
+  thread filesystem program_options system date_time)
+
+Add_Subdirectory( src )
+
