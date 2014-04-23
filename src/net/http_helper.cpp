@@ -4,6 +4,8 @@
 #include <istream>
 #include <ostream>
 
+#include <boost/property_tree/xml_parser.hpp>
+
 #include "net/yafic_net.hpp"
 
 namespace yafic {
@@ -43,7 +45,8 @@ namespace yafic {
 	return yafic_net::HTTP_INVALID;
       }
       if (status_code != 200) {
-	std::cout << "Response returned with status code " << status_code << "\n";
+	std::cerr << "Response returned with status code " << 
+	  status_code << std::endl;
 	return yafic_net::HTTP_STATUS_ERROR;
       }
       boost::asio::read_until(socket, _response, "\r\n\r\n");
@@ -68,5 +71,25 @@ namespace yafic {
     return yafic_net::HTTP_OK;    
   } // end do_request
 
+  int 
+  http_helper::do_request(const std::string& _server,
+			  const std::string& _path,
+			  boost::property_tree::ptree& _ptree) {
+    boost::asio::streambuf response;
+    int result = do_request(_server, _path, response);
+    if (result != yafic_net::HTTP_OK) {
+      return result;
+    }
+    std::istream is(&response);
+    try {
+      read_xml(is, _ptree);
+    }
+    catch (std::exception& e) {
+      std::cerr << "Error reading the response" << std::endl;
+      std::cerr << "Exception: " << e.what() << std::endl;
+      return yafic_net::HTTP_RESPONSE_INVALID;
+    }
+    return result;
+  }
 
 }

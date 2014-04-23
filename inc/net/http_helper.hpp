@@ -4,6 +4,7 @@
 #include <string>
 
 #include <boost/asio.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace yafic {
 
@@ -14,6 +15,11 @@ namespace yafic {
     do_request(const std::string& _server,
 	       const std::string& _path,
 	       boost::asio::streambuf& _response);
+
+    static int 
+    do_request(const std::string& _server,
+	       const std::string& _path,
+	       boost::property_tree::ptree& _ptree);
 
   protected:
 

@@ -11,7 +11,7 @@ If(YAFIC_REVISION_VERSION)
   Set(YAFIC_VERSION ${YAFIC_VERSION}.${YAFIC_REVISION_VERSION})
 Endif(YAFIC_REVISION_VERSION)
 
-Message("-- YAFIC VERSION ${YAFIC_VERSION}")
+Message(STATUS "YAFIC VERSION ${YAFIC_VERSION}")
 
 Exec_Program(date ARGS "+%Y/%m/%d-%H:%M:%S" OUTPUT_VARIABLE BUILD_DATE )
 Set(YAFIC_BUILD_VERSION ${BUILD_DATE})
@@ -21,6 +21,9 @@ Set( CMAKE_MODULE_PATH ${YAFIC_SOURCE_DIR}/cmake )
 # Boost
 Find_Package (Boost REQUIRED 
   thread filesystem program_options system date_time)
+
+# Sqlite3
+Find_Package(Sqlite3 REQUIRED)
 
 Add_Subdirectory( src )
 

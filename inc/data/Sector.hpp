@@ -7,7 +7,10 @@ namespace yafic {
 
   class Sector {
   public:
+
     Sector(const std::string& _name);
+
+    virtual ~Sector();
 
     std::string getName() const;
 

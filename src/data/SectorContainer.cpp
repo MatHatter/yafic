@@ -8,19 +8,11 @@ namespace yafic {
   }
 
   SectorContainer::~SectorContainer() {
-    for (auto& it : m_industry) {
-      delete it.second;
-    }
-    m_industry.clear();
-    for (auto& it : m_sector) {
-      delete it.second;
-    }
-    m_sector.clear();
   }
 
   bool SectorContainer::addSector(const std::string& _name) {
     if (m_sector.find(_name) == m_sector.end()) {
-      m_sector[_name] = new Sector(_name);
+      m_sector[_name] = std::make_shared<Sector>(_name);
       return true;
     }
     return false;
@@ -32,9 +24,18 @@ namespace yafic {
     addSector(_sectorName);
     if (m_industry.find(_industryId) == m_industry.end()) {
       m_industry[_industryId] = 
-	new Industry(_industryId, _industryName, *m_sector[_sectorName]);
+	std::make_shared<Industry>(_industryId, _industryName, *m_sector[_sectorName]);
     }
     return false;
+  }
+
+  const std::map<std::string, std::shared_ptr<Sector>>& SectorContainer::getSectors() const {
+    return m_sector;
+  }
+
+  const std::map<int, std::shared_ptr<Industry>>& 
+    SectorContainer::getIndustry() const {
+    return m_industry;
   }
 
   void SectorContainer::print() {
