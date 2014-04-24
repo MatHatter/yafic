@@ -3,7 +3,8 @@ yafic
 
 Yahoo! Finance C++ API
 
-* Description
+# Description
+
 This C++ library provides an API to access to Yahoo finance data. Currently, it allows to get:
 - All the sectors 
 - All the industries
