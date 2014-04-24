@@ -12,6 +12,8 @@ namespace yafic {
 
   const std::string xml_parser::INDUSTRY_ELT = "industry";
 
+  const std::string xml_parser::COMPANY_ELT = "company";
+
   bool xml_parser::parse_industries(boost::property_tree::ptree& _ptree,
 				 yfContainer<Sector>& _sectors,
 				 yfContainer<Industry>& _industries) {
@@ -42,8 +44,35 @@ namespace yafic {
   }
 
   bool xml_parser::parse_stocks(boost::property_tree::ptree& _ptree,
-				const yfContainer<Industry> _industries,
+				const std::shared_ptr<Industry>& _industry,
 				yfContainer<Stock>& _stocks) {
+    using boost::property_tree::ptree;
+    BOOST_FOREACH(ptree::value_type& v,
+		  _ptree.get_child("query.results")) {
+      std::string industryName = 
+	v.second.get<std::string>("<xmlattr>.name", NOT_FOUND);
+      std::cout << industryName << " / " << _industry->getName() << std::endl;
+      if (industryName == NOT_FOUND) {
+	continue;
+      }
+      BOOST_FOREACH(ptree::value_type& company_node,
+		    v.second.get_child("")) {
+	if (company_node.first == COMPANY_ELT) {
+	  std::string companyName = 
+	    company_node.second.get<std::string>("<xmlattr>.name", NOT_FOUND);
+	  if (companyName == NOT_FOUND) {
+	    continue;
+	  }
+	  std::string companySymbol = 
+	    company_node.second.get<std::string>("<xmlattr>.symbol", NOT_FOUND);
+	  if (companySymbol == NOT_FOUND) {
+	    continue;
+	  }
+	  _stocks[companySymbol] = 
+	    std::make_shared<Stock>(companyName, companySymbol);
+	}
+      }
+    }
     return true;
   }
 

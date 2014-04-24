@@ -63,4 +63,8 @@ namespace yafic {
     return ss.str();
   }
 
+  std::string
+  yahoo_config::getIndustryRequest(const std::string& _industryId) {
+    return XML_GET_INDUSTRY_PREFIX + _industryId + XML_GET_INDUSTRY_SUFFIX;
+  }
 }

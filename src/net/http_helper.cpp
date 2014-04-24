@@ -52,11 +52,11 @@ namespace yafic {
       boost::asio::read_until(socket, _response, "\r\n\r\n");
 
       std::string header;
-      std::cout << "-- Header" << std::endl;
+      // std::cout << "-- Header" << std::endl;
       while (getline(response_stream, header) && header != "\r") {
-	std::cout << header << std::endl;
+	// std::cout << header << std::endl;
       }
-      std::cout << "--" << std::endl;
+      // std::cout << "--" << std::endl;
       boost::system::error_code error;
       while (boost::asio::read(socket, _response,
 			       boost::asio::transfer_at_least(1), error)) {

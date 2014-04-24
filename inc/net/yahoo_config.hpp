@@ -31,6 +31,7 @@ namespace yafic {
 					   const std::tm& _startDate,
 					   const std::tm& _endDate);
 
+    static std::string getIndustryRequest(const std::string& _id);
   };
 
 }
