@@ -1,6 +1,7 @@
 #include "net/yahoo_config.hpp"
 
 #include <sstream>
+#include <iomanip>
 
 namespace yafic {
 
@@ -31,6 +32,7 @@ namespace yafic {
   const std::string yahoo_config::END_DATE_CLAUSE = 
     "%22%20and%20endDate%20%3D%20%22";
 
+
   /*
   "SGO.PA";
   "%22%20and%20startDate%20%3D%20%22";
@@ -47,9 +49,10 @@ namespace yafic {
     // lambda to format date
     auto format_date = [](const std::tm& _date) {
       std::stringstream ss;
-      ss << (1900+_date.tm_year) << "-" <<
-      (1+_date.tm_mon) << "-" <<
-      _date.tm_mday;
+      ss << (1900+_date.tm_year) << "-";
+      ss << std::setfill('0') << std::setw(2) << (1+_date.tm_mon);
+      ss << "-";
+      ss << std::setfill('0') << std::setw(2) << _date.tm_mday;
       return ss.str();
     };
     std::stringstream ss;

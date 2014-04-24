@@ -6,6 +6,7 @@ Set(YAFIC_DATA_SOURCES
   SectorContainer.cpp
   xml_parser.cpp
   SqliteManager.cpp
+  HistoData.cpp
 )
 Set(YAFIC_DATA_LIB yaficdata)
 Add_Library(${YAFIC_DATA_LIB} ${YAFIC_DATA_SOURCES})

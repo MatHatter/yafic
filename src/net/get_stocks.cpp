@@ -1,12 +1,5 @@
 #include <iostream>
 #include <string>
-#include <climits>
-#include <ctime>
-
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-#include <boost/foreach.hpp>
-#include <sqlite3.h>
 
 #include "data/Industry.hpp"
 #include "data/Sector.hpp"
