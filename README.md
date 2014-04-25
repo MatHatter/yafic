@@ -11,3 +11,10 @@ This C++ library provides an API to access to Yahoo finance data. Currently, it 
 - All the stocks
 - Historical data of specific period for a particular stock
 
+# Examples
+
+## Reading all stocks
+
+## Getting historical data of a stock
+
+
