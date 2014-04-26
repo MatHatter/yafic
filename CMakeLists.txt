@@ -27,3 +27,19 @@ Find_Package(Sqlite3 REQUIRED)
 
 Add_Subdirectory( src )
 
+Option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
+
+If(BUILD_DOCUMENTATION)
+  Find_package (Doxygen)
+  If (NOT DOXYGEN_FOUND)
+    Message(FATAL_ERROR "Doxygen is needed to build the documentation.")
+  Endif() 
+  Configure_File( 
+    ${PROJECT_SOURCE_DIR}/doc/yafic.doxyfile.in
+    ${PROJECT_BINARY_DIR}/doc/yafic.doxyfile @ONLY )
+ 
+  Add_Custom_Target (doc
+    ${DOXYGEN_EXECUTABLE} 
+    ${PROJECT_BINARY_DIR}/doc/yafic.doxyfile
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+ENDIF()
